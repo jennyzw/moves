@@ -1,4 +1,9 @@
-moves
+Moves Visualization
 =====
 
-d3 visualization
+http://d3js.org/
+
+
+##Usage
+    python -m SimpleHTTPServer 7102
+	localhost:7102
