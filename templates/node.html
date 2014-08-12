@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>simple node and link</title>
+<!--Importing another javascript file-->
+<script type = "text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!--Adding a stylesheet-->
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="../static/css/node.css">
+
+<p>
+<h1><b>User</b><br></h1> <select id = "userlist" onchange = "change();" ></select><p>
+<fieldset class="day-grid">
+     <h1><b>Day of week</b><br></h1>
+         <li><input type="checkbox" class="checkall" />Select All</li> 
+         <li><input name="day" type="checkbox" value="0">Monday </li> 
+         <li><input name="day" type="checkbox" value="1">Tuesday</li> 
+         <li><input name="day"type="checkbox" value="2">Wednesday</li> 
+         <li><input name="day"type="checkbox" value="3">Thursday</li> 
+         <li><input name="day"type="checkbox" value="4">Friday</li> 
+         <li><input name="day"type="checkbox" value="5">Saturday</li> 
+         <li><input name="day"type="checkbox" value="6">Sunday</li> 
+         <li><input type="submit" value="Submit" onClick="change();"></li></fieldset><p>
+      
+    <!-- haven't implemented this filter yet 
+    these values depend on how the iso string date is parsed  -->
+   <fieldset class="date-grid"> 
+    <h1><b>Time of day</b><br></h1>
+        <li><input type="checkbox" class="checkall" />Select All</li> 
+        <li><input name="time"type="checkbox" value="0">12am</li> 
+        <li><input name="time"type="checkbox" value="1">1am</li>
+        <li><input name="time"type="checkbox" value="2">2am</li>
+        <li><input name="time"type="checkbox" value="3">3am</li>
+        <li><input name="time"type="checkbox" value="4">4am</li>
+        <li><input name="time"type="checkbox" value="5">5am</li>
+        <li><input name="time"type="checkbox" value="6">6am</li>
+        <li><input name="time"type="checkbox" value="7">7am</li>
+        <li><input name="time"type="checkbox" value="8">8am</li>
+        <li><input name="time"type="checkbox" value="9">9am</li>
+        <li><input name="time"type="checkbox" value="10">10am</li>
+        <li><input name="time"type="checkbox" value="11">11am</li>
+        <li><input name="time"type="checkbox" value="12">12pm</li>
+        <li><input name="time"type="checkbox" value="13">1pm</li>
+        <li><input name="time"type="checkbox" value="14">2pm</li>
+        <li><input name="time"type="checkbox" value="15">3pm</li>
+        <li><input name="time"type="checkbox" value="16">4pm</li>
+        <li><input name="time"type="checkbox" value="17">5pm</li>
+        <li><input name="time"type="checkbox" value="18">6pm</li>
+        <li><input name="time"type="checkbox" value="19">7pm</li>
+        <li><input name="time"type="checkbox" value="20">8pm</li>
+        <li><input name="time"type="checkbox" value="21">9pm</li>
+        <li><input name="time"type="checkbox" value="22">10pm</li>
+        <li><input name="time"type="checkbox" value="23">11pm</li>
+        <li><input type="submit" value="Submit" onClick="filterTime();"></li></fieldset>
+
+</p> 
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../static/js/node/utilities.js"></script>
+<script src="../static/js/node/visualize.js"></script>
+<script src="../static/js/node/node.js"></script>
+</body>
+</html>

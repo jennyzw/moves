@@ -1,0 +1,42 @@
+.day-grid li {
+  display:block;
+  float: left;
+  width:25%;
+}
+
+.date-grid li {
+  display:block;
+  float:left;
+  width:18%;
+}
+
+h1 {
+  font: 16px sans-serif;
+}
+
+p {
+  font: 12px sans-serif;
+}
+
+fieldset {
+  font: 12px sans-serif;
+  border-color: white;
+}
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+circle {
+  fill: #ccc;
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
