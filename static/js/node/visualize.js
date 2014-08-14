@@ -16,7 +16,7 @@ for(var p in dataArray) {
   links.push({"source":dataArray[p]["location_name1"], "target":dataArray[p]["location_name2"]});
 }
  
-var nodes = {}
+var nodes = {};
 links.forEach(function(link) {
   link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
   link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
@@ -35,44 +35,41 @@ var force = d3.layout.force()
     .on("tick", tick) 
     .start();
 
-
 // populating a new object with fewer, weighted nodes
 var weightedNodes = {};
 for(key in nodes) {
   if(nodes[key]["weight"]>12) {
-    weightedNodes[key]=nodes[key]
+    weightedNodes[key]=nodes[key];
   }
 }
-console.log(weightedNodes);
 
-var weightedLinks=[];
-// for(key in links) {
-//   if(links[key]["source"] == weightedNodes[key]) {
-//     weightedLinks[key]["source"]=weightedNodes[key]
-//   }
-// }
-// for(var p in dataArray) {
-//   weightedLinks.push({"source":dataArray[p]["location_name1"], "target":dataArray[p]["location_name2"]});
-// }
- 
-links.forEach(function(link) {
-  link.source = weightedNodes[link.source] || (weightedNodes[link.source] = {name: link.source});
-  link.target = weightedNodes[link.target] || (weightedNodes[link.target] = {name: link.target});
-});
+// removing links accordingly
+// populating a new links object according to new nodes object
+var weightedLinks = [];
+var nodeLength = Object.keys(weightedNodes).length;
+for(var i = 0; i < links.length; i++) {
+  var foundSource = false;
+  var foundTarget = false;
+  for(j in weightedNodes) {
+    if(links[i]["source"] == weightedNodes[j]) {
+      foundSource = true;
+    }
+    for(k in weightedNodes) {
+      if(links[i]["target"] == weightedNodes[k]) {
+        foundTarget = true;
+      } 
+    }
+  }
+  if(foundSource && foundTarget) {
+    weightedLinks.push(links[i]);
+  }
+}
+console.log(weightedLinks);
 
-//console.log(weightedLinks);
-
-// var path = svg.append("svg:g").selectAll("path")
-//     .data(force.links(weightedLinks))
-//     .enter().append("svg:path") 
-//     //.attr("class", function(d) { return "link " + d.type; })
-//    .attr("class", "link")
-//    .attr("marker-end", "url(#end)")
-
-
+// new filtered node & link graph
 var force = d3.layout.force()
     .nodes(d3.values(weightedNodes))
-    .links(links)
+    .links(weightedLinks)
     .linkDistance(200)
   //.linkStrength(0.6)
     .charge(-120)
@@ -121,9 +118,7 @@ var path = svg.append("svg:g").selectAll("path")
 	 .attr("class", "link")
 	 .attr("marker-end", "url(#end)")
 
-   
-
-	
+  
 // defining nodes
 var nodeRadius = 10
 var circle = svg.append("g").selectAll("circle")
@@ -143,10 +138,6 @@ var text = svg.append("g").selectAll("text")
     .attr("x", 8)
     .attr("y", ".31em")
     .text(function(d) { return d.name; });
-
-
-
-
 
 
 // Use elliptical arc path segments to doubly-encode directionality.
