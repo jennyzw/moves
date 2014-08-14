@@ -37,13 +37,13 @@ var force = d3.layout.force()
 
 
 // populating a new object with fewer, weighted nodes
-var weightedNodes = {}
+var weightedNodes = {};
 for(key in nodes) {
   if(nodes[key]["weight"]>12) {
     weightedNodes[key]=nodes[key]
   }
 }
-//jconsole.log(weightedNodes);
+console.log(weightedNodes);
 
 var weightedLinks=[];
 // for(key in links) {
@@ -51,16 +51,19 @@ var weightedLinks=[];
 //     weightedLinks[key]["source"]=weightedNodes[key]
 //   }
 // }
+// for(var p in dataArray) {
+//   weightedLinks.push({"source":dataArray[p]["location_name1"], "target":dataArray[p]["location_name2"]});
+// }
+ 
+links.forEach(function(link) {
+  link.source = weightedNodes[link.source] || (weightedNodes[link.source] = {name: link.source});
+  link.target = weightedNodes[link.target] || (weightedNodes[link.target] = {name: link.target});
+});
 
-// removing links accordingly
-// links.forEach(function(link) { 
-//   link.source = weightedNodes[link.source] || (weightedNodes[link.source] = {name: link.source});
-//   link.target = weightedNodes[link.target] || (weightedNodes[link.target] = {name: link.target});
-// }); 
-
+//console.log(weightedLinks);
 
 // var path = svg.append("svg:g").selectAll("path")
-//     .data(force.links())
+//     .data(force.links(weightedLinks))
 //     .enter().append("svg:path") 
 //     //.attr("class", function(d) { return "link " + d.type; })
 //    .attr("class", "link")
@@ -68,7 +71,7 @@ var weightedLinks=[];
 
 
 var force = d3.layout.force()
-    .nodes(d3.values(nodes))
+    .nodes(d3.values(weightedNodes))
     .links(links)
     .linkDistance(200)
   //.linkStrength(0.6)
