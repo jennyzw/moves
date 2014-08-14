@@ -6,3 +6,10 @@ function isoStringToDate(s) {
 }
 // Date functions used: getDay, getHours
 // iso date format: "2013-09-10T22:57:31.000Z"
+
+// jQuery for select all button in html
+$(function () {
+    $('.checkall').on('click', function () { 
+        $(this).closest('fieldset').find(':checkbox').prop('checked', this.checked);
+    });
+});

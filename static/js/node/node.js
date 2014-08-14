@@ -33,13 +33,6 @@ function locations(res) {
 	visualize(pairs);
 }
 
-// jQuery for select all button in html
-$(function () {
-    $('.checkall').on('click', function () { 
-        $(this).closest('fieldset').find(':checkbox').prop('checked', this.checked);
-    });
-}); 
-
 /* method to filter graph by user, day of week, time of day, etc.
    calls ajax function again with a rewritten callback in order to
    repopulate the data array with new parameters the user has chosen */
