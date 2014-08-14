@@ -1,7 +1,6 @@
 // D3 - draws the graph
 /*DESIGN ISSUE:
-  use the weight attribute for each node to filter the number of nodes shown (weight >=10)
-  	-- so far, can only figure out how to access weight of a node when using it to set another attribute
+  (resolved) use the weight attribute for each node to filter the number of nodes shown (weight >=10)
   figure out another layout combination that will spread out the graph so its readable.
  */
 var width = 1000,
@@ -16,20 +15,20 @@ for(var p in dataArray) {
   links.push({"source":dataArray[p]["location_name1"], "target":dataArray[p]["location_name2"]});
 }
  
-var nodes = {};
+var nodes = {}; 
 links.forEach(function(link) {
   link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
   link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
 });
 
-
+// initialize nodes and links
 var force = d3.layout.force()
     .nodes(d3.values(nodes)) 
     .links(links)
 	  .linkDistance(200)
 	//.linkStrength(0.6)
     .charge(-120)
-	//.friction(0.45)
+	  .friction(0.45)
 	//.gravity(0)
     .size([width, height])
     .on("tick", tick) 
@@ -42,6 +41,7 @@ for(key in nodes) {
     weightedNodes[key]=nodes[key];
   }
 }
+console.log(weightedNodes);
 
 // removing links accordingly
 // populating a new links object according to new nodes object
@@ -64,7 +64,6 @@ for(var i = 0; i < links.length; i++) {
     weightedLinks.push(links[i]);
   }
 }
-console.log(weightedLinks);
 
 // new filtered node & link graph
 var force = d3.layout.force()
@@ -73,7 +72,7 @@ var force = d3.layout.force()
     .linkDistance(200)
   //.linkStrength(0.6)
     .charge(-120)
-  //.friction(0.45)
+  .friction(0.45)
   //.gravity(0)
     .size([width, height])
     .on("tick", tick)
@@ -118,9 +117,8 @@ var path = svg.append("svg:g").selectAll("path")
 	 .attr("class", "link")
 	 .attr("marker-end", "url(#end)")
 
-  
 // defining nodes
-var nodeRadius = 10
+var nodeRadius = 10;
 var circle = svg.append("g").selectAll("circle")
     .data(force.nodes())
   	.enter().append("circle") 
@@ -138,7 +136,6 @@ var text = svg.append("g").selectAll("text")
     .attr("x", 8)
     .attr("y", ".31em")
     .text(function(d) { return d.name; });
-
 
 // Use elliptical arc path segments to doubly-encode directionality.
 function tick() {
@@ -170,4 +167,5 @@ function mouseout() {
       .duration(750)
       .attr("r", 10);
 }
+
 }
