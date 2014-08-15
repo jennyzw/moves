@@ -55,12 +55,12 @@ function change() {
 						foundTime = true;
 				}
 			}
-			if(foundDay) {
+			if(foundDay && foundTime) {
 				pairs[p] = parsed[p];
 			}
-			else if(foundTime) {
-				pairs[p] = parsed[p];
-			}
+			// else if(foundTime) {
+			// 	pairs[p] = parsed[p];
+			// }
 		}
 	
 		visualize(pairs);
