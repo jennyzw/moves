@@ -11,6 +11,8 @@ var svg = d3.select("body").append("svg")
     .attr("height", height);
 var nodeRadius = 8;
 
+
+
 function visualize(dataArray) {
 var links = [];
 for(var p in dataArray) {
@@ -38,7 +40,7 @@ var force = d3.layout.force()
 // populating a new object with fewer, weighted nodes
 var weightedNodes = {};
 for(key in nodes) {
-  if(nodes[key]["weight"]>12) {
+  if(nodes[key]["weight"]>20) {
     weightedNodes[key]=nodes[key];
   }
 }
@@ -123,8 +125,8 @@ var circle = svg.selectAll("circle")
     .data(force.nodes())
   .enter().append("g")
     .attr("class", "node")
-    .on("mouseover", mouseover)
-    .on("mouseout", mouseout)
+    //.on("mouseover", mouseover)
+    //.on("mouseout", mouseout)
     .call(force.drag);
 
     circle.append("circle")
@@ -169,4 +171,25 @@ function mouseout() {
       .attr("r", nodeRadius);
 }
 
+var fisheye = d3.fisheye.circular()
+    .radius(200)
+    .distortion(2);
+
+    svg.on("mousemove", function() {
+  fisheye.focus(d3.mouse(this));
+});
+
+  // circle.each(function(d) { d.fisheye = fisheye(d); })
+  //     .attr("cx", function(d) { return d.fisheye.x; })
+  //     .attr("cy", function(d) { return d.fisheye.y; })
+  //     .attr("r", function(d) { return d.fisheye.z * 4.5; });
+
+  // path.attr("x1", function(d) { return d.source.fisheye.x; })
+  //     .attr("y1", function(d) { return d.source.fisheye.y; })
+  //     .attr("x2", function(d) { return d.target.fisheye.x; })
+  //     .attr("y2", function(d) { return d.target.fisheye.y; });
+
+
+
 }
+
