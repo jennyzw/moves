@@ -3,11 +3,13 @@
   (resolved) use the weight attribute for each node to filter the number of nodes shown (weight >=10)
   figure out another layout combination that will spread out the graph so its readable.
  */
+ 
 var width = 1000,
     height = 700;
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
+var nodeRadius = 8;
 
 function visualize(dataArray) {
 var links = [];
@@ -26,10 +28,9 @@ var force = d3.layout.force()
     .nodes(d3.values(nodes)) 
     .links(links)
 	  .linkDistance(200)
-	//.linkStrength(0.6)
+	  .linkStrength(0.6)
     .charge(-120)
 	  .friction(0.45)
-	//.gravity(0)
     .size([width, height])
     .on("tick", tick) 
     .start();
@@ -70,10 +71,9 @@ var force = d3.layout.force()
     .nodes(d3.values(weightedNodes))
     .links(weightedLinks)
     .linkDistance(200)
-  //.linkStrength(0.6)
+    .linkStrength(0.6)
     .charge(-120)
-  .friction(0.45)
-  //.gravity(0)
+    .friction(0.45)
     .size([width, height])
     .on("tick", tick)
     .start();
@@ -113,21 +113,22 @@ svg.append("svg:defs").selectAll("marker")
 var path = svg.append("svg:g").selectAll("path")
     .data(force.links())
   	.enter().append("svg:path") 
-    //.attr("class", function(d) { return "link " + d.type; })
-	 .attr("class", "link")
-	 .attr("marker-end", "url(#end)")
+    .attr("class", function(d) { return "link " + d.type; })
+	  .attr("class", "link")
+	  .attr("marker-end", "url(#end)")
 
 // defining nodes
-var nodeRadius = 10;
-var circle = svg.append("g").selectAll("circle")
+
+var circle = svg.selectAll("circle")
     .data(force.nodes())
-  	.enter().append("circle") 
-  //.attr("r", function(d) {return d.weight;})   // testing the weight attribute
-    .attr("r", nodeRadius)
-	  .attr("fixed", true)
-	  .on("mouseover", mouseover) // currently not working
+  .enter().append("g")
+    .attr("class", "node")
+    .on("mouseover", mouseover)
     .on("mouseout", mouseout)
     .call(force.drag);
+
+    circle.append("circle")
+    .attr("r", nodeRadius);
 
 // adding text
 var text = svg.append("g").selectAll("text")
@@ -147,7 +148,7 @@ function tick() {
 function linkArc(d) {
   var dx = d.target.nodeRadius - d.source.x,
       dy = d.target.nodeRadius - d.source.y,
-      //dr = Math.sqrt(dx * dx + dy * dy);
+      //dr = Math.sqrt(dx * dx + dy * dy); //curved links, unncessary right now
 	    dr = 0;
   return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
 }
@@ -158,14 +159,14 @@ function transform(d) {
 
 function mouseover() {
   d3.select(this).select("circle").transition()
-      .duration(750)
-      .attr("r", 40);
+      .duration(350)
+      .attr("r", 20);
 }
 
 function mouseout() {
   d3.select(this).select("circle").transition()
-      .duration(750)
-      .attr("r", 10);
+      .duration(350)
+      .attr("r", nodeRadius);
 }
 
 }
