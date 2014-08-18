@@ -1,3 +1,20 @@
+//Copy this function over to your javascript/html file
+//this function gets data from the server based on the command that you pass in
+//example ajax("execute",{"sql":"Select * from users;"},function(res){//callback function})
+function ajax(command, params, cb) {  
+	var server = "http://192.81.129.111:9988"
+	$.post(server, { "command" : command, args : JSON.stringify(params) }, cb)
+}
+
+//here is an example calling of the ajax function
+//it gets all of the location pairs with a command of "getAllLocationPairs" and params of user_id
+//this also shows how to do a callback since ajax is asynchronous
+$(document).ready(function() {
+	ajax("getUsers", {}, users)
+	ajax("getLocationsForUser",{"user_id":1},locations)
+});
+
+
 var width = 1000,
 	height = 700;
 	bottomHeight = 800;
@@ -15,13 +32,6 @@ var chart = d3.select(".chart")
 		.range([height, 0]);
 		
 	var x = function(d) { return d.value; };
-
-	// creating group
-    /* var bar = chart.selectAll("g")
-     .data(dataArray, function(d) {return dataArray.indexOf(d)})
-     .enter().append("g")
-	 .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; })
-	  */
 
 	// adding rectangles
 	chart.selectAll("rect")
@@ -49,55 +59,27 @@ var chart = d3.select(".chart")
 	  
 	// adding name text
 	var labels = chart.selectAll("text.name")
-	.data(dataArray, function(d) {return dataArray.indexOf(d)})
-	.enter().append("text")
-    .attr("x", barWidth/2)
+	  .data(dataArray, function(d) {return dataArray.indexOf(d)})
+	  .enter().append("text")
+      .attr("x", barWidth/2)
       .attr("y", height+3)
       .attr("dy", ".75em")
-	  .attr("transform",  function(d, i) { return "translate(" + i * barWidth + ",0) " ; })
+	  .attr("transform",  function(d, i) { return "translate(" + i * barWidth + ",0) " ;})
 	  //.attr("transform", function(d) {return "rotate(-65)"} )
       .text(function(d) { return d.name; }); 
-	    
+	
+	var rotate = chart.selectAll("text.name");
+	rotate.data(dataArray, function(d) {return dataArray.indexOf(d)})
+	.enter().append("text")
+		.attr("transform", function(d) {return "rotate(-65)"} );
 	  
 	 // removing rectangles
 	 var r = chart.selectAll("rect")
-	.data(dataArray, function(d) {return dataArray.indexOf(d)})
-	.exit().remove();
+	  .data(dataArray, function(d) {return dataArray.indexOf(d)})
+	  .exit().remove();
 }
 
-
-//Copy this function over to your javascript/html file
-//this function gets data from the server based on the command that you pass in
-//example ajax("execute",{"sql":"Select * from users;"},function(res){//callback function})
-function ajax(command, params, cb) {  
-	var server = "http://192.81.129.111:9988"
-	$.post(server, { "command" : command, args : JSON.stringify(params) }, cb)
-}
-
-//here is an example calling of the ajax function
-//it gets all of the location pairs with a command of "getAllLocationPairs" and params of user_id
-//this also shows how to do a callback since ajax is asynchronous
-$(document).ready(function() {
-	ajax("getUsers", {}, getUserID)
-	ajax("getLocationsForUser",{"user_id":1},getLocations)
-	//ajax("getAllLocationPairs",{"user_id":1},getPairs)
-	//ajax("getAllPlacesVisitedFromALocation", {"user_id":1, "location_name": "School"},getPlaces)
-});
-
-/* function getPairs(res) {
-parsed = JSON.parse(res);
-for(p in parsed) {
-}
-}
-
-function getPlaces(res) {
-parsed = JSON.parse(res);
-for(p in parsed) {
-	console.log(parsed[p]["location_name"]);
-}
-} */
-
-function getUserID(res) {
+function users(res) {
 var count = 0;
 var userArray = [];
 	parsed = JSON.parse(res)
@@ -117,7 +99,7 @@ var userArray = [];
 	});
 }
 
-function getLocations(res){
+function locations(res){
 	var r = [];
 	parsed = JSON.parse(res);
 	for(p in parsed) {
@@ -131,7 +113,7 @@ function getLocations(res){
 function change() {
 	var id = $("#userlist").val();
 	console.log(id)
-	ajax("getLocationsForUser",{"user_id":id},getLocations);
+	ajax("getLocationsForUser",{"user_id":id},locations);
 }
 
 //returns frequency, used for locations visited array
