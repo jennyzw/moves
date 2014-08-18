@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>bar chart: Moves Data Visualization</title>
+
+<!--Importing another javascript file-->
+<script type = "text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!--Adding a stylesheet-->
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<style>
+h1 {
+	font-size: .9em;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+</style>
+<style>
+.chart {
+	background-color: #D3D3D3;
+}
+.chart rect {
+  fill: steelblue;
+}
+.chart text {
+  fill: white;
+  font: 12px sans-serif;
+  text-anchor: middle;
+}
+#user {
+	position: relative;
+	display: block;
+}
+
+</style>
+<svg class="chart"></svg>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="../static/js/bar/script.js"></script>
+
+<body>
+<h1>
+	<div id = "user">
+		User 
+		<select id = "userlist" onchange = "change();" ></select>
+	</div>
+</h1>
+</body>
+</html>
