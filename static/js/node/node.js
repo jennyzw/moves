@@ -51,7 +51,7 @@ function change() {
 				if(isoStringToDate(parsed[p]["start_date1"]).getDay() == dayVal[i].value)
 					foundDay = true;
 				for(var j = 0; j < timeVal.length; j++) {
-					if(isoStringToDate(parsed[p]["end_date1"]).getHours() == timeVal[j].value)
+					if(isoStringToDate(parsed[p]["start_date1"]).getHours() == timeVal[j].value)
 						foundTime = true;
 				}
 			}

@@ -46,6 +46,7 @@ fieldset {
 
 circle {
   fill: #ccc;
+  /*fill: #F75D59;*/
   stroke: #333;
   stroke-width: 1.5px;
 }

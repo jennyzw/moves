@@ -64,14 +64,15 @@ var chart = d3.select(".chart")
       .attr("x", barWidth/2)
       .attr("y", height+3)
       .attr("dy", ".75em")
+      .attr("transform", function(d) {return "rotate(-65)"} )
 	  .attr("transform",  function(d, i) { return "translate(" + i * barWidth + ",0) " ;})
-	  //.attr("transform", function(d) {return "rotate(-65)"} )
+	 
       .text(function(d) { return d.name; }); 
 	
 	var rotate = chart.selectAll("text.name");
 	rotate.data(dataArray, function(d) {return dataArray.indexOf(d)})
 	.enter().append("text")
-		.attr("transform", function(d) {return "rotate(-65)"} );
+	.attr("transform", function(d) {return "rotate(-65)"} );
 	  
 	 // removing rectangles
 	 var r = chart.selectAll("rect")

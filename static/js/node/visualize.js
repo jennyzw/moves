@@ -11,7 +11,7 @@ var svg = d3.select("body").append("svg")
     .attr("height", height);
 var nodeRadius = 8;
 
-
+var color = d3.scale.category10();
 
 function visualize(dataArray) {
 var links = [];
@@ -119,18 +119,40 @@ var path = svg.append("svg:g").selectAll("path")
 	  .attr("class", "link")
 	  .attr("marker-end", "url(#end)")
 
-// defining nodes
+// creating gradients -- will work on later
+// var defs = svg.append('defs');
+// var gradient = defs.append('radialGradient')
+//     .attr('id', 'fadient');
+// gradient.append('stop')
+//     .attr('offset', '75%')
+//     .attr('stop-color', 'white')
+//     .attr('stop-opacity', 1)
+// gradient.append('stop')
+//     .attr('offset', '100%')
+//     .attr('stop-color', 'white')
+//     .attr('stop-opacity', .1)
 
+// var mask = defs.append('mask')
+//     .attr('id', 'mask')
+//     .attr('maskContentUnits', 'objectBoundingBox')
+//   .append('circle')
+//     .attr('fill', 'url(#fadient)')
+//     .attr('cx', .5)
+//     .attr('cy', .5)
+//     .attr('r', .5)
+
+// defining nodes
 var circle = svg.selectAll("circle")
     .data(force.nodes())
   .enter().append("g")
     .attr("class", "node")
-    //.on("mouseover", mouseover)
-    //.on("mouseout", mouseout)
+    .on("mouseover", mouseover)
+    .on("mouseout", mouseout)
     .call(force.drag);
-
     circle.append("circle")
-    .attr("r", nodeRadius);
+    .attr("r", nodeRadius)
+    .attr('mask', 'url(#mask)');
+  //.attr("fill", function (d, i) { return color(i); });
 
 // adding text
 var text = svg.append("g").selectAll("text")
@@ -171,6 +193,7 @@ function mouseout() {
       .attr("r", nodeRadius);
 }
 
+// fisheye effect
 var fisheye = d3.fisheye.circular()
     .radius(200)
     .distortion(2);
@@ -188,8 +211,6 @@ var fisheye = d3.fisheye.circular()
   //     .attr("y1", function(d) { return d.source.fisheye.y; })
   //     .attr("x2", function(d) { return d.target.fisheye.x; })
   //     .attr("y2", function(d) { return d.target.fisheye.y; });
-
-
 
 }
 
